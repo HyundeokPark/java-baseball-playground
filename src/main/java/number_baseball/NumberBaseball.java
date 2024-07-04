@@ -51,17 +51,39 @@ public class NumberBaseball {
     }
 
     public GameResult compareNumber(String number, String input) {
-        int strike = 0;
-        int ball = 0;
-
-        for (int i = 0; i < 3; i++) {
-            if (number.charAt(i) == input.charAt(i)) {
-                strike++;
-            } else if (number.contains(String.valueOf(input.charAt(i)))) {
-                ball++;
-            }
-        }
+        int strike = calculateStrike(number, input);
+        int ball = calculateBall(number, input);
 
         return new GameResult(strike, ball, strike == 0 && ball == 0);
+    }
+
+    private int calculateStrike(String number, String input) {
+        int strike = 0;
+        for (int i = 0; i < 3; i++) {
+            strike += checkStrike(number.charAt(i), input.charAt(i));
+        }
+        return strike;
+    }
+
+    private int checkStrike(char numberChar, char inputChar) {
+        if (numberChar == inputChar) {
+            return 1;
+        }
+        return 0;
+    }
+
+    private int calculateBall(String number, String input) {
+        int ball = 0;
+        for (int i = 0; i < 3; i++) {
+            ball += checkBall(number, input.charAt(i), i);
+        }
+        return ball;
+    }
+
+    private int checkBall(String number, char inputChar, int index) {
+        if (number.charAt(index) != inputChar && number.contains(String.valueOf(inputChar))) {
+            return 1;
+        }
+        return 0;
     }
 }

@@ -38,4 +38,8 @@ public class GameResult {
     public int hashCode() {
         return Objects.hash(strike, ball, nothing);
     }
+
+    public int getStrike() {
+        return strike;
+    }
 }
